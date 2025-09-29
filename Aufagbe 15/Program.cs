@@ -45,12 +45,13 @@ namespace Aufagbe_15
                 if (i <= hTi)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    for (int i2 = 0; i2 < (hTi - 0.5) * 2; i2++)
+                    for (int i2 = 1; i2 <= (hTi - 0.5) * 2; i2++)
                     {
-                        if (i2 >= hTi - 0.5 - i && i2 <= hTi + 0.5 + i) //Weiter macvhen
+                        if (i2 >= hTi + 1 - i && i2 <= hTi - 1 + i)
                         {
                             Console.Write("*");
-                        } else
+                        }
+                        else
                         {
                             Console.Write(" ");
                         }
@@ -58,9 +59,16 @@ namespace Aufagbe_15
                 } else
                 {
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    for (int i2 = 0; i2 < hTr; i2++)
+                    for (int i2 = 1; i2 <= (hTi - 0.5) * 2; i2++)
                     {
-                        Console.Write("*");
+                        if (i2 > (((hTi - 0.5) * 2) - wTr) / 2 && i2 <= (((hTi - 0.5) * 2) - wTr) / 2 + wTr)
+                        {
+                            Console.Write("*");
+                        }
+                        else
+                        {
+                            Console.Write(" ");
+                        }
                     }
                 }
                 
