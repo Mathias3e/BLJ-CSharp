@@ -19,7 +19,7 @@ namespace Aufagbe_8
 
             for (int i = 0; i < forbiddenWords.Length; i++)
             {
-                if (input.Contains(forbiddenWords[i]))
+                if (input.ToLower().Contains(forbiddenWords[i]))
                 {
                     count++;
                 }
