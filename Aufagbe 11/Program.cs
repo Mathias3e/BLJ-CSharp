@@ -29,8 +29,12 @@ namespace Aufagbe_11
             Console.Write("\n");
 
             Console.WriteLine($"-------------------------------------\n| {"Zahl".PadRight(2)} | {"Quersumme".PadRight(2)} | Zahl / Quersumme\n-------------------------------------");
-            for (int i = 0; i <= Number2-Number1; i++) {
-                Console.WriteLine($"| {(Number1 + i).ToString().PadRight(4)} | {BerechneQuersumme(Number1 + i).ToString().PadRight(9)} | {(Number1 + i) / (double)BerechneQuersumme(Number1)}");
+            for (int i = 0; i <= Number2 - Number1; i++)
+            {
+                if ((Number1 + i) % BerechneQuersumme(Number1 + i) == 0)
+                {
+                    Console.WriteLine($"| {(Number1 + i).ToString().PadRight(4)} | {BerechneQuersumme(Number1 + i).ToString().PadRight(9)} | {(Number1 + i) / (double)BerechneQuersumme(Number1+i)}");
+                }
             }
             Console.ReadKey();
         }
