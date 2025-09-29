@@ -24,7 +24,7 @@ namespace Aufagbe_11
             {
                 Console.Write("Zahl 2: ");
                 input = Console.ReadLine();
-            } while (int.TryParse(input, out Number2) == false);
+            } while (int.TryParse(input, out Number2) == false || Number2-Number1 <= 0);
 
             Console.Write("\n");
 
