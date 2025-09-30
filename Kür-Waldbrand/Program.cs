@@ -11,20 +11,21 @@ namespace Kür_Waldbrand
     {
         static void Main(string[] args)
         {
-            int with = 200;
-            int hight = 100;
+            int with = 60;
+            int hight = 30;
+
+            int z = 1;
+            int w = 500;
 
             string[,] forest = new string[hight, with];
 
             GeneratingForest(forest, with, hight);
-            while (true)
+            while (!Console.KeyAvailable)
             {
                 Render(forest, with, hight);
-                Thread.Sleep(500);
-                CatchFire(forest, with, hight);
+                Thread.Sleep(w);
+                CatchFire(forest, with, hight, z);
             }
-
-            Console.ReadKey();
         }
 
         static void GeneratingForest(string[,] forest, int with, int hight)
@@ -51,11 +52,10 @@ namespace Kür_Waldbrand
                         forest[i, i2] = "-";
                     }
                 }
-                Console.Write("\n");
             }
         }
 
-        static void CatchFire(string[,] forest, int with, int hight)
+        static void CatchFire(string[,] forest, int with, int hight, int z)
         {
             Random random = new Random();
             int probability;
@@ -66,18 +66,18 @@ namespace Kür_Waldbrand
                 {
                     probability = random.Next(1, with * hight + 1);
 
-                    if (probability <= 1 && forest[i, i2] == "B")
+                    if (probability <= z && forest[i, i2] == "B")
                     {
                         forest[i, i2] = "F";
                     } 
                 }
-                Console.Write("\n");
             }
         }
 
         static void Render(string[,] forest, int with, int hight)
         {
-            Console.Clear();
+           Console.Clear();
+
             for (int i = 0; i < hight; i++)
             {
                 for (int i2 = 0; i2 < with; i2++)
