@@ -139,7 +139,7 @@ namespace Kür_Waldbrand
             {
                 for (int i2 = 1; i2 < with - 1; i2++)
                 {
-                    if ()
+                    if (true)
                     {
                         forestClone[i, i2] = "f";
                     }
