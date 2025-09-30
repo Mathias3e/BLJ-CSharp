@@ -11,11 +11,12 @@ namespace Kür_Waldbrand
     {
         static void Main(string[] args)
         {
-            int with = 60;
-            int hight = 30;
+            int with = 50;
+            int hight = with/2;
 
             int z = 1;
-            int w = 500;
+            int w = 10;
+            int t = 500;
 
             string[,] forest = new string[hight, with];
 
@@ -23,8 +24,10 @@ namespace Kür_Waldbrand
             while (!Console.KeyAvailable)
             {
                 Render(forest, with, hight);
-                Thread.Sleep(w);
-                CatchFire(forest, with, hight, z);
+                forest = (string[,])FireSpread(forest, with, hight).Clone();
+                forest = (string[,])CatchFire(forest, with, hight, z).Clone();
+                //forest = (string[,])FireExtinguish(forest, with, hight, z).Clone();
+                Thread.Sleep(t);
             }
         }
 
@@ -55,10 +58,11 @@ namespace Kür_Waldbrand
             }
         }
 
-        static void CatchFire(string[,] forest, int with, int hight, int z)
+        static string[,] CatchFire(string[,] forest, int with, int hight, int z)
         {
             Random random = new Random();
             int probability;
+            string[,] forestClone = (string[,])forest.Clone();
 
             for (int i = 0; i < hight; i++)
             {
@@ -68,15 +72,17 @@ namespace Kür_Waldbrand
 
                     if (probability <= z && forest[i, i2] == "B")
                     {
-                        forest[i, i2] = "F";
+                        forestClone[i, i2] = "F";
                     } 
                 }
             }
+
+            return forestClone;
         }
 
         static void Render(string[,] forest, int with, int hight)
         {
-           Console.Clear();
+            Console.SetCursorPosition(0, 0);
 
             for (int i = 0; i < hight; i++)
             {
@@ -97,10 +103,50 @@ namespace Kür_Waldbrand
                     else if (forest[i, i2] == "F")
                     {
                         Console.Write("\x1b[48;2;41;31;13m\u001b[38;2;227;34;34mF");
-                    }                    
+                    }
+                    else if (forest[i, i2] == "f")
+                    {
+                        Console.Write("\x1b[48;2;41;31;13m\u001b[38;2;43;24;13mF");
+                    }
                 }
                 Console.Write("\n");
             }
+        }
+
+        static string[,] FireSpread (string[,] forest, int with, int hight)
+        {
+            string[,] forestClone = (string[,])forest.Clone();
+
+            for (int i = 1; i < hight-1; i++)
+            {
+                for (int i2 = 1; i2 < with-1; i2++)
+                {
+                    if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2 + 1] == "F" || forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B")
+                    {
+                        forestClone[i, i2] = "F";
+                    }
+                }
+            }
+
+            return forestClone;
+        }
+
+        static string[,] FireExtinguish (string[,] forest, int with, int hight)
+        {
+            string[,] forestClone = (string[,])forest.Clone();
+
+            for (int i = 1; i < hight - 1; i++)
+            {
+                for (int i2 = 1; i2 < with - 1; i2++)
+                {
+                    if ()
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                }
+            }
+
+            return forestClone;
         }
     }
 }
