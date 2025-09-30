@@ -49,7 +49,7 @@ namespace Aufagbe_15
                     {
                         if (i2 >= hTi + 1 - i && i2 <= hTi - 1 + i)
                         {
-                            Console.Write("*");
+                            Console.Write("\x1b[38;2;185;213;75m*");
                         }
                         else
                         {
@@ -63,7 +63,7 @@ namespace Aufagbe_15
                     {
                         if (i2 > (((hTi - 0.5) * 2) - wTr) / 2 && i2 <= (((hTi - 0.5) * 2) - wTr) / 2 + wTr)
                         {
-                            Console.Write("*");
+                            Console.Write("\x1b[38;2;102;44;23m*");
                         }
                         else
                         {
