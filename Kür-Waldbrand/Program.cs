@@ -134,11 +134,11 @@ namespace Kür_Waldbrand
             {
                 for (int i2 = 0; i2 < with; i2++)
                 {
-                    if (i > 0 && i < (hight - 1) && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "B" && ((forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 - 1] == "f") || forest[i + 1, i2] == "F" || forest[i + 1, i2 + 1] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2] == "F" || forest[i - 1, i2 + 1] == "F")) // #
+                    if (i > 0 && i < (hight - 1) && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "B" && (forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2] == "F" || forest[i + 1, i2 + 1] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2] == "F" || forest[i - 1, i2 + 1] == "F")) // #
                     {
                         forestClone[i, i2] = "F";
                     }
-                    else if (i == 0 && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "B" && (forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i + 1, i2 + 1] == "F" || forest[i + 1, i2] == "F" || (forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 - 1] == "f"))) // --
+                    else if (i == 0 && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "B" && (forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i + 1, i2 + 1] == "F" || forest[i + 1, i2] == "F" || forest[i + 1, i2 - 1] == "F")) // --
                     {
                         forestClone[i, i2] = "F";
                     }
@@ -150,7 +150,7 @@ namespace Kür_Waldbrand
                     {
                         forestClone[i, i2] = "F";
                     }
-                    else if (i2 == (with - 1) && i > 0 && i < (hight - 1) && forest[i, i2] == "B" && (forest[i + 1, i2] == "F" || (forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 - 1] == "f") || forest[i, i2 - 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2] == "F")) // |
+                    else if (i2 == (with - 1) && i > 0 && i < (hight - 1) && forest[i, i2] == "B" && (forest[i + 1, i2] == "F" || forest[i + 1, i2 - 1] == "F"  || forest[i, i2 - 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2] == "F")) // |
                     {
                         forestClone[i, i2] = "F";
                     }
@@ -158,7 +158,7 @@ namespace Kür_Waldbrand
                     {
                         forestClone[i, i2] = "F";
                     }
-                    else if (i == 0 && i2 == (with - 1) && forest[i, i2] == "B" && (forest[i + 1, i2] == "F" || (forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 - 1] == "f") || forest[i, i2 - 1] == "F")) //.
+                    else if (i == 0 && i2 == (with - 1) && forest[i, i2] == "B" && (forest[i + 1, i2] == "F" || forest[i + 1, i2 - 1] == "F"  || forest[i, i2 - 1] == "F")) //.
                     {
                         forestClone[i, i2] = "F";
                     }
