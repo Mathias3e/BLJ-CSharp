@@ -75,7 +75,7 @@ namespace Kür_Waldbrand
                 {
                     probability = random.Next(1, with * hight + 1);
 
-                    if (probability <= z && forest[i, i2] == "B")
+                    if (probability <= z && (forest[i, i2] == "B" || forest[i, i2] == "b"))
                     {
                         forestClone[i, i2] = "F";
                     } 
