@@ -117,11 +117,27 @@ namespace Kür_Waldbrand
         {
             string[,] forestClone = (string[,])forest.Clone();
 
-            for (int i = 1; i < hight-1; i++)
+            for (int i = 0; i < hight; i++)
             {
-                for (int i2 = 1; i2 < with-1; i2++)
+                for (int i2 = 0; i2 < with; i2++)
                 {
-                    if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2 + 1] == "F" || forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B")
+                    if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2 + 1] == "F" || forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B" && i != 0 && i != hight-1 && i2 != 0 && i2 != with-1)
+                    {
+                        forestClone[i, i2] = "F";
+                    }
+                    else if ((forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B" && i == 0) // hier gehts weiter
+                    {
+                        forestClone[i, i2] = "F";
+                    }
+                    else if ((forest[i - 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2 + 1] == "F") && forest[i, i2] == "B" && i == hight)
+                    {
+                        forestClone[i, i2] = "F";
+                    }
+                    else if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 + 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B" && i2 == 0)
+                    {
+                        forestClone[i, i2] = "F";
+                    }
+                    else if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i + 1, i2 - 1] == "F") && forest[i, i2] == "B" && i2 == with)
                     {
                         forestClone[i, i2] = "F";
                     }
