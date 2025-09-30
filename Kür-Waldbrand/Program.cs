@@ -24,9 +24,9 @@ namespace Kür_Waldbrand
             while (!Console.KeyAvailable)
             {
                 Render(forest, with, hight);
+                forest = (string[,])FireExtinguish(forest, with, hight).Clone();
                 forest = (string[,])FireSpread(forest, with, hight).Clone();
                 forest = (string[,])CatchFire(forest, with, hight, z).Clone();
-                //forest = (string[,])FireExtinguish(forest, with, hight, z).Clone();
                 Thread.Sleep(t);
             }
         }
@@ -106,7 +106,7 @@ namespace Kür_Waldbrand
                     }
                     else if (forest[i, i2] == "f")
                     {
-                        Console.Write("\x1b[48;2;41;31;13m\u001b[38;2;43;24;13mF");
+                        Console.Write("\x1b[48;2;41;31;13m\u001b[38;2;81;41;41mf");
                     }
                 }
                 Console.Write("\n");
@@ -139,7 +139,7 @@ namespace Kür_Waldbrand
             {
                 for (int i2 = 1; i2 < with - 1; i2++)
                 {
-                    if (true)
+                    if ((forest[i - 1, i2] != "B" && forest[i + 1, i2] != "B" && forest[i, i2 - 1] != "B" && forest[i, i2 + 1] != "B" && forest[i - 1, i2 - 1] != "B" && forest[i - 1, i2 + 1] != "B" && forest[i + 1, i2 - 1] != "B" && forest[i + 1, i2 + 1] != "B") && forest[i, i2] == "F")
                     {
                         forestClone[i, i2] = "f";
                     }
