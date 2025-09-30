@@ -15,7 +15,7 @@ namespace Kür_Waldbrand
             int hight = with/2;
 
             int z = 1;
-            int w = 10;
+            int w = 2;
             int t = 500;
 
             string[,] forest = new string[hight, with];
@@ -24,6 +24,7 @@ namespace Kür_Waldbrand
             while (!Console.KeyAvailable)
             {
                 Render(forest, with, hight);
+                forest = (string[,])TreeGrow(forest, with, hight, w).Clone();
                 forest = (string[,])FireExtinguish(forest, with, hight).Clone();
                 forest = (string[,])FireSpread(forest, with, hight).Clone();
                 forest = (string[,])CatchFire(forest, with, hight, z).Clone();
@@ -121,41 +122,41 @@ namespace Kür_Waldbrand
             {
                 for (int i2 = 0; i2 < with; i2++)
                 {
-                    if (i > 0 && i < (hight - 1) && i2 > 0 && i2 < (with - 1)) // #
+                    if (i > 0 && i < (hight - 1) && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "B" && (forest[i+1, i2-1] == "F" || forest[i+1, i2] == "F" || forest[i+1, i2+1] == "F" || forest[i, i2-1] == "F" || forest[i, i2+1] == "F" || forest[i-1, i2-1] == "F" || forest[i-1, i2] == "F" || forest[i-1, i2+1] == "F")) // #
                     {
-                        forestClone[i, i2] = "";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (i == 0 && i2 > 0 && i2 < (with - 1)) // --
+                    else if (i == 0 && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "B" && (forest[i, i2-1] == "F" || forest[i, i2+1] == "F" || forest[i+1, i2+1] == "F" || forest[i+1, i2] == "F" || forest[i+1, i2-1] == "F")) // --
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (i == (hight - 1) && i2 > 0 && i2 < (with - 1)) // --
+                    else if (i == (hight - 1) && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "B" && (forest[i-1, i2+1] == "F" || forest[i-1, i2] == "F" || forest[i-1, i2-1] == "F" || forest[i, i2+1] == "F" || forest[i, i2-1] == "F")) // --
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (i2 == 0 && i > 0 && i < (hight - 1)) // |
+                    else if (i2 == 0 && i > 0 && i < (hight - 1) && forest[i, i2] == "B" && (forest[i+1, i2+1] == "F" || forest[i+1, i2] == "F" || forest[i, i2+1] == "F" || forest[i-1, i2+1] == "F" || forest[i-1, i2] == "F")) // |
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (i2 == (with - 1) && && i > 0 && i < (hight - 1)) // | Problem
+                    else if (i2 == (with - 1) && i > 0 && i < (hight - 1) && forest[i, i2] == "B" && (forest[i+1, i2] == "F" || forest[i+1, i2-1] == "F" || forest[i, i2-1] == "F" || forest[i-1, i2-1] == "F" || forest[i-1, i2] == "F")) // |
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (false)
+                    else if (i == 0 && i2 == 0 && forest[i, i2] == "B" && (forest[i+1, i2] == "F" || forest[i+1, i2+1] == "F" || forest[i, i2+1] == "F")) //.
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (false)
+                    else if (i == 0 && i2 == (with - 1) && forest[i, i2] == "B" && (forest[i+1, i2] == "F" || forest[i+1, i2-1] == "F" || forest[i, i2-1] == "F")) //.
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (false)
+                    else if (i == (hight -1) && i2 == 0 && forest[i, i2] == "B" && (forest[i-1, i2] == "F" || forest[i-1, i2+1] == "F" || forest[i, i2+1] == "F")) //.
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
-                    else if (false)
+                    else if (i == (hight - 1) && i2 == (with - 1) && forest[i, i2] == "B" && (forest[i-1, i2-1] == "F" || forest[i-1, i2] == "F" || forest[i, i2-1] == "F")) //.
                     {
-                        forestClone[i, i2] = "f";
+                        forestClone[i, i2] = "F";
                     }
                 }
             }
@@ -167,13 +168,69 @@ namespace Kür_Waldbrand
         {
             string[,] forestClone = (string[,])forest.Clone();
 
-            for (int i = 1; i < hight - 1; i++)
+            for (int i = 0; i < hight; i++)
             {
-                for (int i2 = 1; i2 < with - 1; i2++)
+                for (int i2 = 0; i2 < with; i2++)
                 {
-                    if ((forest[i - 1, i2] != "B" && forest[i + 1, i2] != "B" && forest[i, i2 - 1] != "B" && forest[i, i2 + 1] != "B" && forest[i - 1, i2 - 1] != "B" && forest[i - 1, i2 + 1] != "B" && forest[i + 1, i2 - 1] != "B" && forest[i + 1, i2 + 1] != "B") && forest[i, i2] == "F")
+                    if (i > 0 && i < (hight - 1) && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "F" && (forest[i + 1, i2 - 1] != "B" && forest[i + 1, i2] != "B" && forest[i + 1, i2 + 1] != "B" && forest[i, i2 - 1] != "B" && forest[i, i2 + 1] != "B" && forest[i - 1, i2 - 1] != "B" && forest[i - 1, i2] != "B" && forest[i - 1, i2 + 1] != "B")) // #
                     {
                         forestClone[i, i2] = "f";
+                    }
+                    else if (i == 0 && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "F" && (forest[i, i2 - 1] != "B" && forest[i, i2 + 1] != "B" && forest[i + 1, i2 + 1] != "B" && forest[i + 1, i2] != "B" && forest[i + 1, i2 - 1] != "B")) // --
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (i == (hight - 1) && i2 > 0 && i2 < (with - 1) && forest[i, i2] == "F" && (forest[i - 1, i2 + 1] != "B" && forest[i - 1, i2] != "B" && forest[i - 1, i2 - 1] != "B" && forest[i, i2 + 1] != "B" && forest[i, i2 - 1] != "B")) // --
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (i2 == 0 && i > 0 && i < (hight - 1) && forest[i, i2] == "F" && (forest[i + 1, i2 + 1] != "B" && forest[i + 1, i2] != "B" && forest[i, i2 + 1] != "B" && forest[i - 1, i2 + 1] != "B" && forest[i - 1, i2] != "B")) // |
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (i2 == (with - 1) && i > 0 && i < (hight - 1) && forest[i, i2] == "F" && (forest[i + 1, i2] != "B" && forest[i + 1, i2 - 1] != "B" && forest[i, i2 - 1] != "B" && forest[i - 1, i2 - 1] != "B" && forest[i - 1, i2] != "B")) // |
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (i == 0 && i2 == 0 && forest[i, i2] == "F" && (forest[i + 1, i2] != "B" && forest[i + 1, i2 + 1] != "B" && forest[i, i2 + 1] != "B")) //.
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (i == 0 && i2 == (with - 1) && forest[i, i2] == "F" && (forest[i + 1, i2] != "B" && forest[i + 1, i2 - 1] != "B" && forest[i, i2 - 1] != "B")) //.
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (i == (hight - 1) && i2 == 0 && forest[i, i2] == "F" && (forest[i - 1, i2] != "B" && forest[i - 1, i2 + 1] != "B" && forest[i, i2 + 1] != "B")) //.
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (i == (hight - 1) && i2 == (with - 1) && forest[i, i2] == "F" && (forest[i - 1, i2 - 1] != "B" && forest[i - 1, i2] != "B" && forest[i, i2 - 1] != "B")) //.
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                }
+            }
+
+            return forestClone;
+        }
+
+        static string[,] TreeGrow(string[,] forest, int with, int hight, int w)
+        {
+            string[,] forestClone = (string[,])forest.Clone();
+            Random random = new Random();
+            int probability;
+
+            for (int i = 0; i < hight; i++)
+            {
+                for (int i2 = 0; i2 < with; i2++)
+                {
+                    if (forestClone[i,i2] == "f")
+                    {
+                        probability = random.Next(1, 101);
+                        if (probability < w)
+                        {
+                            forestClone[i, i2] = "B";
+                        }
                     }
                 }
             }
