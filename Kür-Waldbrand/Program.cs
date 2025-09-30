@@ -121,25 +121,41 @@ namespace Kür_Waldbrand
             {
                 for (int i2 = 0; i2 < with; i2++)
                 {
-                    if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2 + 1] == "F" || forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B" && i != 0 && i != hight-1 && i2 != 0 && i2 != with-1)
+                    if (i > 0 && i < (hight - 1) && i2 > 0 && i2 < (with - 1)) // #
                     {
-                        forestClone[i, i2] = "F";
+                        forestClone[i, i2] = "";
                     }
-                    else if ((forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i + 1, i2 - 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B" && i == 0) // hier gehts weiter
+                    else if (i == 0 && i2 > 0 && i2 < (with - 1)) // --
                     {
-                        forestClone[i, i2] = "F";
+                        forestClone[i, i2] = "f";
                     }
-                    else if ((forest[i - 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i - 1, i2 + 1] == "F") && forest[i, i2] == "B" && i == hight)
+                    else if (i == (hight - 1) && i2 > 0 && i2 < (with - 1)) // --
                     {
-                        forestClone[i, i2] = "F";
+                        forestClone[i, i2] = "f";
                     }
-                    else if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 + 1] == "F" || forest[i - 1, i2 + 1] == "F" || forest[i + 1, i2 + 1] == "F") && forest[i, i2] == "B" && i2 == 0)
+                    else if (i2 == 0 && i > 0 && i < (hight - 1)) // |
                     {
-                        forestClone[i, i2] = "F";
+                        forestClone[i, i2] = "f";
                     }
-                    else if ((forest[i - 1, i2] == "F" || forest[i + 1, i2] == "F" || forest[i, i2 - 1] == "F" || forest[i - 1, i2 - 1] == "F" || forest[i + 1, i2 - 1] == "F") && forest[i, i2] == "B" && i2 == with)
+                    else if (i2 == (with - 1) && && i > 0 && i < (hight - 1)) // | Problem
                     {
-                        forestClone[i, i2] = "F";
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (false)
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (false)
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (false)
+                    {
+                        forestClone[i, i2] = "f";
+                    }
+                    else if (false)
+                    {
+                        forestClone[i, i2] = "f";
                     }
                 }
             }
