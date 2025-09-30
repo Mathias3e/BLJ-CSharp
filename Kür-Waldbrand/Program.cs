@@ -16,7 +16,7 @@ namespace Kür_Waldbrand
 
             int z = 1;
             int w = 2;
-            int t = 500;
+            int t = 10;
 
             string[,] forest = new string[hight, with];
 
@@ -43,9 +43,13 @@ namespace Kür_Waldbrand
                 {
                     probability = random.Next(1, 101);
 
-                    if (probability <= 45)
+                    if (probability <= 35)
                     {
                         forest[i, i2] = "B";
+                    }
+                    else if (probability > 35 && probability <= 45)
+                    {
+                        forest[i, i2] = "b";
                     }
                     else if (probability > 45 && probability <= 60)
                     {
@@ -108,6 +112,10 @@ namespace Kür_Waldbrand
                     else if (forest[i, i2] == "f")
                     {
                         Console.Write("\x1b[48;2;41;31;13m\u001b[38;2;81;41;41mf");
+                    }
+                    else if (forest[i, i2] == "b")
+                    {
+                        Console.Write("\x1b[48;2;41;31;13m\u001b[38;2;24;141;60mb");
                     }
                 }
                 Console.Write("\n");
@@ -228,6 +236,12 @@ namespace Kür_Waldbrand
                     {
                         probability = random.Next(1, 101);
                         if (probability < w)
+                        {
+                            forestClone[i, i2] = "b";
+                        }
+                    } else if (forestClone[i, i2] == "b") {
+                        probability = random.Next(1, 101);
+                        if (probability < 50)
                         {
                             forestClone[i, i2] = "B";
                         }
