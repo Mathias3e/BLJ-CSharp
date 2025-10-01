@@ -13,6 +13,7 @@ namespace Aufagbe_20
 {
     internal class Program
     {
+
         static void Main(string[] args)
         {
             string input;
@@ -30,7 +31,7 @@ namespace Aufagbe_20
 
                 Console.Write("\nNächster Witz holen? j/n ");
                 input = Console.ReadLine();
-            } while (input.ToLower() != "n");
+            } while (input.ToLower() == "j");
 
             Console.ReadKey();
         }
