@@ -86,15 +86,10 @@ namespace Kür_Waldbrand
                 Render(forest, width, height, playerx, playery);
                 (playerx, playery) = PlayerMovment(width, height, playerx, playery);
                 if (Exit() == true) { break; }
-                (playerx, playery) = PlayerMovment(width, height, playerx, playery);
                 forest = (string[,])TreeGrow(forest, width, height, w).Clone();
-                (playerx, playery) = PlayerMovment(width, height, playerx, playery);
                 forest = (string[,])FireExtinguish(forest, width, height).Clone();
-                (playerx, playery) = PlayerMovment(width, height, playerx, playery);
                 forest = (string[,])FireSpread(forest, width, height).Clone();
-                (playerx, playery) = PlayerMovment(width, height, playerx, playery);
                 forest = (string[,])CatchFire(forest, width, height, playerx, playery).Clone();
-                (playerx, playery) = PlayerMovment(width, height, playerx, playery);
                 Thread.Sleep(Math.Max(1, t));
             }
         }
@@ -173,12 +168,15 @@ namespace Kür_Waldbrand
         {
             string[,] forestClone = (string[,])forest.Clone();
 
-            if (Console.KeyAvailable && forestClone[playery, playerx] == "B")
+            if (forestClone[playery, playerx] == "B")
             {
-                ConsoleKeyInfo key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.Spacebar)
+                if (Console.KeyAvailable)
                 {
-                    forestClone[playery, playerx] = "F";
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.F)
+                    {
+                        forestClone[playery, playerx] = "F";
+                    }
                 }
             }
             return forestClone;
