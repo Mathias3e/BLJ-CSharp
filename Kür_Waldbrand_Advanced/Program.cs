@@ -27,24 +27,7 @@ namespace Kür_Waldbrand
             bool game = true;
 
             //Thank you for playing my Game
-            //
-            //
-            //
-            //
-            //
-            //
-            //
 
-            do
-            {
-                Console.Write("Zu wie viel Prozent soll ein Baum anfangen zu brennen (Optimal ca. 1): ");
-                input = Console.ReadLine();
-                if (input == "")
-                {
-                    input = $"{12}";
-                }
-            } while (!int.TryParse(input, out z));
-            Console.Write("\n");
             do
             {
                 Console.Write("Zu wie viel Prozent soll ein Baum anfangen zu wachsen (Optimal ca. 2): ");
