@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,16 @@ namespace Kür_Waldbrand
 
             string input;
 
+            bool game = true;
+
             //Thank you for playing my Game
+            //
+            //
+            //
+            //
+            //
+            //
+            //
 
             do
             {
@@ -81,11 +91,10 @@ namespace Kür_Waldbrand
 
             GeneratingForest(forest, width, height);
 
-            while (true)
+            while (game)
             {
                 Render(forest, width, height, playerx, playery);
-                (playerx, playery) = PlayerMovment(width, height, playerx, playery);
-                if (Exit() == true) { break; }
+                (playerx, playery, game) = PlayerMovmentAndExit(width, height, playerx, playery);
                 forest = (string[,])TreeGrow(forest, width, height, w).Clone();
                 forest = (string[,])FireExtinguish(forest, width, height).Clone();
                 forest = (string[,])FireSpread(forest, width, height).Clone();
@@ -93,20 +102,6 @@ namespace Kür_Waldbrand
                 Thread.Sleep(Math.Max(1, t));
             }
         }
-
-        static bool Exit()
-        {
-            if (Console.KeyAvailable)
-            {
-                ConsoleKeyInfo key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.Q)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         static void GeneratingForest(string[,] forest, int width, int height)
         {
             Random random = new Random();
@@ -138,30 +133,37 @@ namespace Kür_Waldbrand
             }
         }
 
-        static (int, int) PlayerMovment(int width, int height, int playerx, int playery)
+        static (int, int, bool) PlayerMovmentAndExit(int width, int height, int playerx, int playery)
         {
+            bool game = true;
+
             if (Console.KeyAvailable)
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
 
+                if (key.Key == ConsoleKey.Q)
+                {
+                    game = false;
+                }
+
                 if (key.Key == ConsoleKey.UpArrow)
                 {
-                    playery--;
+                    playery = Math.Max(0, playery - 1);
                 }
                 else if (key.Key == ConsoleKey.DownArrow)
                 {
-                    playery++;
+                    playery = Math.Min(height - 1, playery + 1);
                 }
                 else if (key.Key == ConsoleKey.LeftArrow)
                 {
-                    playerx--;
+                    playerx = Math.Max(0, playerx - 1);
                 }
                 else if (key.Key == ConsoleKey.RightArrow)
                 {
-                    playerx++;
+                    playerx = Math.Min(width - 1, playerx + 1);
                 }
             }
-            return (playerx, playery);
+            return (playerx, playery, game);
         }
 
         static string[,] CatchFire(string[,] forest, int width, int height, int playerx, int playery)
