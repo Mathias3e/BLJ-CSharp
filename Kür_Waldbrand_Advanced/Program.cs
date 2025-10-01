@@ -23,6 +23,8 @@ namespace Kür_Waldbrand
 
             string input;
 
+            //Thank you for playing my Game
+
             do
             {
                 Console.Write("Zu wie viel Prozent soll ein Baum anfangen zu brennen (Optimal ca. 1): ");
