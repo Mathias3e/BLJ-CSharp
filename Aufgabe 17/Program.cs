@@ -27,9 +27,9 @@ namespace Aufgabe_17
 
             age = today - birthday;
 
-            Console.WriteLine($"\nJahren: {age.Days / 365.25}");
-            Console.WriteLine($"Monaten: {age.Days / 30.44}");
-            Console.WriteLine($"Wochen: {age.Days / 7.0}");
+            Console.WriteLine($"\nJahren: {(int)Math.Floor(age.Days / 365.25)}");
+            Console.WriteLine($"Monaten: {(int)Math.Floor(age.Days / 30.44)}");
+            Console.WriteLine($"Wochen: {(int)Math.Floor(age.Days / 7.0)}");
             Console.WriteLine($"Tagen: {age.Days}");
 
             Console.ReadKey();
