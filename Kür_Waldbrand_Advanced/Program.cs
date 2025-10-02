@@ -73,6 +73,7 @@ namespace Kür_Waldbrand
             string[,] forest = new string[height, width];
 
             GeneratingForest(forest, width, height);
+            forest = (string[,])AddWater(forest, width, height).Clone();
 
             while (game)
             {
@@ -114,6 +115,39 @@ namespace Kür_Waldbrand
                     }
                 }
             }
+        }
+
+        static string[,] AddWater(string[,] forest, int width, int height)
+        {
+            string[,] forestClone = (string[,])forest.Clone();
+
+            Random random = new Random();
+            int probability;
+            int positionx = random.Next(1, width+1);
+            int positiony = random.Next(1, height+1);
+
+            forestClone[positiony, positionx] = "W";
+
+            for (int i3 = 0; i3 <= 4; i3++)
+            {
+                for (int i = 1; i < height - 1; i++)
+                {
+                    for (int i2 = 1; i2 < width - 1; i2++)
+                    {
+                        probability = random.Next(1, 101);
+
+                        if ((forestClone[i, i2 - 1] == "W" || forestClone[i, i2 + 1] == "W") && probability < 50)
+                        {
+                            forestClone[i, i2] = "W";
+                        }
+                        else if ((forestClone[i - 1, i2] == "W" || forestClone[i + 1, i2] == "W") && probability < 25)
+                        {
+                            forestClone[i, i2] = "W";
+                        }
+                    }
+                }
+            }
+            return forestClone;
         }
 
         static (int, int, bool) PlayerMovmentAndExit(int width, int height, int playerx, int playery)
@@ -205,6 +239,10 @@ namespace Kür_Waldbrand
                         {
                             Console.Write("\x1b[48;2;84;63;26m ");
                         }
+                        else if (forest[i, i2] == "W")
+                        {
+                            Console.Write("\x1b[48;2;38;124;182m ");
+                        }
                     }
                     else
                     {
@@ -235,6 +273,10 @@ namespace Kür_Waldbrand
                         else if (forest[i, i2] == "-f")
                         {
                             Console.Write("\x1b[48;2;41;31;13m ");
+                        }
+                        else if (forest[i, i2] == "W")
+                        {
+                            Console.Write("\x1b[48;2;38;124;182m ");
                         }
                     }
                 }
@@ -361,9 +403,19 @@ namespace Kür_Waldbrand
                     if (forestClone[i, i2] == "-f")
                     {
                         probability = random.Next(1, 101);
-                        if (probability < w)
+                        if (forestClone[i, Math.Max(0, Math.Min(i2 - 1, forestClone.GetLength(1) - 1))] == "W" || forestClone[i, Math.Max(0, Math.Min(i2 + 1, forestClone.GetLength(1) - 1))] == "W" || forestClone[Math.Max(0, Math.Min(i - 1, forestClone.GetLength(0) - 1)), i2] == "W" || forestClone[Math.Max(0, Math.Min(i + 1, forestClone.GetLength(0) - 1)), i2] == "W")
                         {
-                            forestClone[i, i2] = "b";
+                            if (probability < Math.Max(w*10, 100))
+                            {
+                                forestClone[i, i2] = "b";
+                            }
+                        }
+                        else
+                        {
+                            if (probability < w)
+                            {
+                                forestClone[i, i2] = "b";
+                            }
                         }
                     }
                     else if (forestClone[i, i2] == "b")
