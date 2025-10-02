@@ -23,6 +23,8 @@ namespace Kür_Waldbrand
             int playerx = 0;
             int playery = 0;
 
+            int seed;
+
             string input;
 
             bool game = true;
@@ -78,30 +80,44 @@ namespace Kür_Waldbrand
                     input = $"{height * 2}";
                 }
             } while (!int.TryParse(input, out width));
+            Console.Write("\n");
+            do
+            {
+                Console.Write($"Was soll der Seed sein: ");
+                input = Console.ReadLine();
+                if (input == "")
+                {
+                    Random random = new Random();
+                    input = random.Next(1, int.MaxValue).ToString();
+                } else
+                {
+                    input = Math.Abs(input.GetHashCode()).ToString();
+                }
+            } while (!int.TryParse(input, out seed));
 
             Console.Clear();
 
             string[,] forest = new string[height, width];
 
-            GeneratingForest(forest, width, height);
+            GeneratingForest(forest, width, height, seed);
 
-            forest = (string[,])AddFirstWater(forest, width, height).Clone();
-            forest = (string[,])AddWater(forest, width, height, s).Clone();
+            forest = (string[,])AddFirstWater(forest, width, height, seed).Clone();
+            forest = (string[,])AddWater(forest, width, height, s, seed).Clone();
 
             while (game)
             {
                 Render(forest, width, height, playerx, playery);
                 (playerx, playery, game) = PlayerMovmentAndExit(width, height, playerx, playery);
-                forest = (string[,])TreeGrow(forest, width, height, w).Clone();
+                forest = (string[,])TreeGrow(forest, width, height, w, seed).Clone();
                 forest = (string[,])FireExtinguish(forest, width, height).Clone();
                 forest = (string[,])FireSpread(forest, width, height).Clone();
                 forest = (string[,])CatchFire(forest, width, height, playerx, playery).Clone();
                 Thread.Sleep(Math.Max(1, t));
             }
         }
-        static void GeneratingForest(string[,] forest, int width, int height)
+        static void GeneratingForest(string[,] forest, int width, int height, int seed)
         {
-            Random random = new Random();
+            Random random = new Random(seed);
             int probability;
 
             for (int i = 0; i < height; i++)
@@ -130,11 +146,11 @@ namespace Kür_Waldbrand
             }
         }
 
-        static string[,] AddFirstWater(string[,] forest, int width, int height)
+        static string[,] AddFirstWater(string[,] forest, int width, int height, int seed)
         {
             string[,] forestClone = (string[,])forest.Clone();
 
-            Random random = new Random();
+            Random random = new Random(seed);
             int positionx = random.Next(1, width - 1);
             int positiony = random.Next(1, height - 1);
 
@@ -143,11 +159,11 @@ namespace Kür_Waldbrand
             return forestClone;
         }
 
-        static string[,] AddWater(string[,] forest, int width, int height, int s)
+        static string[,] AddWater(string[,] forest, int width, int height, int s, int seed)
         {
             string[,] forestClone = (string[,])forest.Clone();
 
-            Random random = new Random();
+            Random random = new Random(seed);
             int probability;
             int water = 1;
             bool addWater = false;
@@ -420,10 +436,10 @@ namespace Kür_Waldbrand
             return forestClone;
         }
 
-        static string[,] TreeGrow(string[,] forest, int width, int height, int w)
+        static string[,] TreeGrow(string[,] forest, int width, int height, int w, int seed)
         {
             string[,] forestClone = (string[,])forest.Clone();
-            Random random = new Random();
+            Random random = new Random(seed);
             int probability;
 
             for (int i = 0; i < height; i++)
