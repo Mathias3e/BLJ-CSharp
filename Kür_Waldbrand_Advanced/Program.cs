@@ -106,8 +106,8 @@ namespace Kür_Waldbrand
 
             while (game)
             {
-                Render(forest, width, height, playerx, playery);
-                (playerx, playery, game) = PlayerMovmentAndExit(width, height, playerx, playery);
+                Render(forest, width, height, playerx, playery, seed);
+                (playerx, playery, game) = KeysPres(width, height, playerx, playery, seed);
                 forest = (string[,])TreeGrow(forest, width, height, w, seed).Clone();
                 forest = (string[,])FireExtinguish(forest, width, height).Clone();
                 forest = (string[,])FireSpread(forest, width, height).Clone();
@@ -196,7 +196,7 @@ namespace Kür_Waldbrand
             return forestClone;
         }
 
-        static (int, int, bool) PlayerMovmentAndExit(int width, int height, int playerx, int playery)
+        static (int, int, bool) KeysPres(int width, int height, int playerx, int playery, int seed)
         {
             bool game = true;
 
@@ -207,6 +207,11 @@ namespace Kür_Waldbrand
                 if (key.Key == ConsoleKey.Q)
                 {
                     game = false;
+                }
+
+                if (key.Key == ConsoleKey.C)
+                {
+                    //System.Windows.Forms.Clipboard.SetText(seed);
                 }
 
                 if (key.Key == ConsoleKey.UpArrow)
@@ -247,7 +252,7 @@ namespace Kür_Waldbrand
             return forestClone;
         }
 
-        static void Render(string[,] forest, int width, int height, int playerx, int playery)
+        static void Render(string[,] forest, int width, int height, int playerx, int playery, int seed)
         {
             Console.SetCursorPosition(0, 0);
 
@@ -329,7 +334,7 @@ namespace Kür_Waldbrand
                 Console.Write("\n");
             }
 
-            Console.Write("\n\x1b[0mDrücke \"q\", um zu beenden.");
+            Console.Write($"\n\x1b[0mDrücke \"q\", um zu beenden. Der Seed ist {seed}, drücke \"c\" um zu Copiren.");
         }
 
         static string[,] FireSpread(string[,] forest, int width, int height)
