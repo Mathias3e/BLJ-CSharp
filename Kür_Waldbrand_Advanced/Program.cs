@@ -18,6 +18,7 @@ namespace Kür_Waldbrand
             int z;      // Optimal 1
             int w;      // Optimal 2
             int t;      // Optimal 250
+            int s;      // Optimal 30
 
             int playerx = 0;
             int playery = 0;
@@ -50,6 +51,16 @@ namespace Kür_Waldbrand
             Console.Write("\n");
             do
             {
+                Console.Write("Wie vile Felder sollen mit Wasser/See bedeckt sein (Optimal 30): ");
+                input = Console.ReadLine();
+                if (input == "")
+                {
+                    input = $"{30}";
+                }
+            } while (!int.TryParse(input, out s));
+            Console.Write("\n");
+            do
+            {
                 Console.Write("Wie hoch soll der Wald sein (Optimal 5 - 25): ");
                 input = Console.ReadLine();
                 if (input == "")
@@ -73,7 +84,9 @@ namespace Kür_Waldbrand
             string[,] forest = new string[height, width];
 
             GeneratingForest(forest, width, height);
-            forest = (string[,])AddWater(forest, width, height).Clone();
+
+            forest = (string[,])AddFirstWater(forest, width, height).Clone();
+            forest = (string[,])AddWater(forest, width, height, s).Clone();
 
             while (game)
             {
@@ -117,20 +130,31 @@ namespace Kür_Waldbrand
             }
         }
 
-        static string[,] AddWater(string[,] forest, int width, int height)
+        static string[,] AddFirstWater(string[,] forest, int width, int height)
+        {
+            string[,] forestClone = (string[,])forest.Clone();
+
+            Random random = new Random();
+            int positionx = random.Next(1, width - 1);
+            int positiony = random.Next(1, height - 1);
+
+            forestClone[positiony, positionx] = "W";
+
+            return forestClone;
+        }
+
+        static string[,] AddWater(string[,] forest, int width, int height, int s)
         {
             string[,] forestClone = (string[,])forest.Clone();
 
             Random random = new Random();
             int probability;
-            int positionx = random.Next(1, width+1);
-            int positiony = random.Next(1, height+1);
+            int water = 1;
+            bool addWater = false;
 
-            forestClone[positiony, positionx] = "W";
-
-            for (int i3 = 0; i3 <= 4; i3++)
+            while (forestClone.Cast<string>().Count(x => x == "W") < s)
             {
-                for (int i = 1; i < height - 1; i++)
+                for (int i = 1; i < height - 1 && !addWater; i++)
                 {
                     for (int i2 = 1; i2 < width - 1; i2++)
                     {
@@ -139,14 +163,20 @@ namespace Kür_Waldbrand
                         if ((forestClone[i, i2 - 1] == "W" || forestClone[i, i2 + 1] == "W") && probability < 50)
                         {
                             forestClone[i, i2] = "W";
+                            water++;
+                            addWater = true;
                         }
                         else if ((forestClone[i - 1, i2] == "W" || forestClone[i + 1, i2] == "W") && probability < 25)
                         {
                             forestClone[i, i2] = "W";
+                            water++;
+                            addWater = true;
                         }
                     }
                 }
+                addWater = false;
             }
+
             return forestClone;
         }
 
@@ -403,7 +433,7 @@ namespace Kür_Waldbrand
                     if (forestClone[i, i2] == "-f")
                     {
                         probability = random.Next(1, 101);
-                        if (forestClone[i, Math.Max(0, Math.Min(i2 - 1, forestClone.GetLength(1) - 1))] == "W" || forestClone[i, Math.Max(0, Math.Min(i2 + 1, forestClone.GetLength(1) - 1))] == "W" || forestClone[Math.Max(0, Math.Min(i - 1, forestClone.GetLength(0) - 1)), i2] == "W" || forestClone[Math.Max(0, Math.Min(i + 1, forestClone.GetLength(0) - 1)), i2] == "W")
+                        if (forest[i, Math.Max(0, Math.Min(i2 - 1, forest.GetLength(1) - 1))] == "W" || forest[i, Math.Max(0, Math.Min(i2 + 1, forest.GetLength(1) - 1))] == "W" || forest[Math.Max(0, Math.Min(i - 1, forest.GetLength(0) - 1)), i2] == "W" || forest[Math.Max(0, Math.Min(i + 1, forest.GetLength(0) - 1)), i2] == "W")
                         {
                             if (probability < Math.Max(w*10, 100))
                             {
