@@ -24,6 +24,7 @@ namespace Kür_Waldbrand
             int playery = 0;
 
             int seed;
+            string seedRow;
 
             string input;
 
@@ -89,8 +90,12 @@ namespace Kür_Waldbrand
                 {
                     Random random = new Random();
                     input = random.Next(1, int.MaxValue).ToString();
-                } else
+                    seedRow = input;
+                    input = input.GetHashCode().ToString();
+                }
+                else
                 {
+                    seedRow = input;
                     input = Math.Abs(input.GetHashCode()).ToString();
                 }
             } while (!int.TryParse(input, out seed));
@@ -106,7 +111,7 @@ namespace Kür_Waldbrand
 
             while (game)
             {
-                Render(forest, width, height, playerx, playery, seed);
+                Render(forest, width, height, playerx, playery, seedRow);
                 (playerx, playery, game) = KeysPres(width, height, playerx, playery);
                 forest = (string[,])TreeGrow(forest, width, height, w, seed).Clone();
                 forest = (string[,])FireExtinguish(forest, width, height).Clone();
@@ -247,7 +252,7 @@ namespace Kür_Waldbrand
             return forestClone;
         }
 
-        static void Render(string[,] forest, int width, int height, int playerx, int playery, int seed)
+        static void Render(string[,] forest, int width, int height, int playerx, int playery, string seedRow)
         {
             Console.SetCursorPosition(0, 0);
 
@@ -329,7 +334,7 @@ namespace Kür_Waldbrand
                 Console.Write("\n");
             }
 
-            Console.Write($"\n\x1b[0mDrücke \"q\", um zu beenden. Der Seed ist {seed}.");
+            Console.Write($"\n\x1b[0mDrücke \"q\", um zu beenden. Der Seed ist \"{seedRow}\".");
         }
 
         static string[,] FireSpread(string[,] forest, int width, int height)
