@@ -91,7 +91,7 @@ namespace Kür_Waldbrand
                     Random random = new Random();
                     input = random.Next(1, int.MaxValue).ToString();
                     seedRow = input;
-                    input = input.GetHashCode().ToString();
+                    input = Math.Abs(input.GetHashCode()).ToString();
                 }
                 else
                 {

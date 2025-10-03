@@ -11,24 +11,7 @@ namespace Kür_Waldbrand
     {
         static void Main(string[] args)
         {
-            int seed;
-            string input;
-
-            do
-            {
-                Console.Write($"Was soll der Seed sein: ");
-                input = Console.ReadLine();
-                if (input == "")
-                {
-                    Random random = new Random();
-                    input = random.Next(1, int.MaxValue).ToString();
-                } else
-                {
-                    input = Math.Abs(input.GetHashCode()).ToString();
-                }
-            } while (!int.TryParse(input, out seed));
-
-            Console.WriteLine(seed);
+            Console.Write("Gabriel".GetHashCode());
 
             Console.ReadKey();
         }
